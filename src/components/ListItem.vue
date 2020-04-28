@@ -6,7 +6,9 @@
     <div class="btn">
       <button>{{buttonType}}</button>
     </div>-->
-    <div id="item">{{ itemData.title }}</div>
+    <div id="item" v-bind:class="{ completed: this.itemData.status }">
+      {{ itemData.title }}
+    </div>
     <div id="options">
       <div id="status">
         <input
@@ -37,6 +39,10 @@ export default {
   flex-direction: row;
   /* width: 100%; */
   justify-content: space-around;
+}
+
+.completed {
+  text-decoration: line-through;
 }
 
 #item {
