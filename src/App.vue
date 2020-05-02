@@ -1,8 +1,7 @@
-/* eslint-disable */
 <template>
   <div id="app">
     <Heading title="To Do" />
-    <AddItem v-on:newItem="foo" />
+    <AddItem v-on:newItem="addNewItem" />
     <ListContent v-bind:data="data" />
   </div>
 </template>
@@ -22,22 +21,25 @@ export default {
   },
   data: () => {
     return {
-      datas: [
-        { id: 0, title: "Do task 1", status: true },
-        { id: 1, title: "Do task 2", status: false },
-        {
-          id: 2,
-          title:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo architecto expedita, deserunt quidem fuga eveniet rem doloremque, molestiae facere iste pariatur! Velit, iste autem eligendi rem recusandae consectetur. Soluta, magnam.Quae voluptatem veritatis incidunt magnam provident cum quos doloremque id suscipit quidem earum recusandae, quam delectus aliquam officia ipsa nisi harum nam iure impedit asperiores amet inventore optio aut? Consequatur.",
-          status: false,
-        },
-      ],
       data: [],
     };
   },
   methods: {
     foo: function(text) {
       console.log(`Received ${text}`);
+    },
+    addNewItem: function(text) {
+      // add new item into database
+      axios
+        .post("http://localhost:3000/add", { title: text })
+        .then((res) => {
+          // console.log("Vue method called");
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+      // update data field
+      this.data = [];
+      this.setData();
     },
     getData: function() {
       let items;
@@ -64,6 +66,7 @@ export default {
     },
   },
   created: function() {
+    // update data field on creation of component
     this.setData();
   },
 };
