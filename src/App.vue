@@ -29,9 +29,6 @@ export default {
     };
   },
   methods: {
-    foo: function(text) {
-      console.log(`Received ${text}`);
-    },
     addNewItem: function(text) {
       // add new item into database
       axios
@@ -44,18 +41,6 @@ export default {
       // update data field
       this.data = [];
       this.setData();
-    },
-    getData: function() {
-      let items;
-      axios
-        .get("http://localhost:3000/getList")
-        .then((res) => {
-          items = res.data;
-          console.log("Vue method called");
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-      return items;
     },
     setData: function() {
       // updates data to values in backend
@@ -95,38 +80,6 @@ export default {
     this.setData();
   },
 };
-
-// let test = function() {
-//   axios
-//     .get("http://localhost:3000/getList")
-//     .then((res) => {
-//       console.log(res.data);
-//     })
-//     .catch((err) => console.log(err));
-// };
-
-// test();
-
-// const xhttp = new XMLHttpRequest();
-
-// xhttp.open("GET", "http://localhost:3000/getList", false);
-// xhttp.send();
-
-// const books = JSON.parse(xhttp.responseText);
-// console.log(books);
-
-// async function makeGetRequest() {
-//   let res = await axios.get("http://localhost:3000/getList");
-
-//   let data = res.data;
-//   console.log(data);
-// }
-// makeGetRequest();
-
-// axios
-//   .get("http://localhost:3000/getList")
-//   .then((res) => console.log(res.data))
-//   .catch((err) => console.log(err));
 </script>
 
 <style>
