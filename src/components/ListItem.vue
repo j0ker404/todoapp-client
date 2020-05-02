@@ -16,10 +16,11 @@
           name="checkbox"
           id="statusIndicator"
           v-model="itemData.status"
+          v-on:click="updateStatus"
         />
       </div>
       <div id="remove">
-        <input type="button" value="remove" v-on:input="$emit('input')" />
+        <input type="button" value="remove" v-on:click="remove" />
       </div>
     </div>
   </div>
@@ -29,6 +30,18 @@
 export default {
   name: "ListItem",
   props: ["itemData"],
+  methods: {
+    remove: function() {
+      // call back function that sends request to be removed to "ListContent"
+      this.$emit("removeMe", this.itemData.id);
+    },
+    updateStatus: function() {
+      // call back function that sends request to be updateStatus to "ListContent"
+      this.$emit("updateStatus", {
+        id: this.itemData.id,
+      });
+    },
+  },
 };
 </script>
 

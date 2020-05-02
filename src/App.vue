@@ -2,7 +2,11 @@
   <div id="app">
     <Heading title="To Do" />
     <AddItem v-on:newItem="addNewItem" />
-    <ListContent v-bind:data="data" />
+    <ListContent
+      v-bind:data="data"
+      v-on:removeMe="removeItem"
+      v-on:status="updateStatus"
+    />
   </div>
 </template>
 
@@ -63,6 +67,27 @@ export default {
           // console.log(res.data);
         })
         .catch((err) => console.log(err));
+    },
+    removeItem: function(itemID) {
+      // call back function for "removeMe" event
+      // remove item
+      axios
+        .delete("http://localhost:3000/delete", {
+          data: { id: itemID },
+        })
+        .catch((err) => console.log(err));
+      // update data
+      this.setData();
+    },
+    updateStatus: function(itemData) {
+      // console.log("boom");
+      axios
+        .put("http://localhost:3000/update", {
+          id: itemData.id,
+        })
+        .catch((err) => console.log(err));
+      // update data
+      this.setData();
     },
   },
   created: function() {
