@@ -27,6 +27,7 @@ export default {
       } else {
         console.log("empty string");
       }
+      this.itemText = "";
     },
   },
 };
