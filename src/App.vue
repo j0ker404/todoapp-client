@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div id="app">
     <Heading title="To Do" />
@@ -10,6 +11,7 @@
 import Heading from "./components/Header";
 import ListContent from "./components/ListContent";
 import AddItem from "./components/AddItem";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -20,7 +22,7 @@ export default {
   },
   data: () => {
     return {
-      data: [
+      datas: [
         { id: 0, title: "Do task 1", status: true },
         { id: 1, title: "Do task 2", status: false },
         {
@@ -30,14 +32,73 @@ export default {
           status: false,
         },
       ],
+      data: [],
     };
   },
   methods: {
     foo: function(text) {
       console.log(`Received ${text}`);
     },
+    getData: function() {
+      let items;
+      axios
+        .get("http://localhost:3000/getList")
+        .then((res) => {
+          items = res.data;
+          console.log("Vue method called");
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+      return items;
+    },
+    setData: function() {
+      // updates data to values in backend
+      axios
+        .get("http://localhost:3000/getList")
+        .then((res) => {
+          this.data = res.data;
+          // console.log("Vue method called");
+          // console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    },
+  },
+  created: function() {
+    this.setData();
   },
 };
+
+// let test = function() {
+//   axios
+//     .get("http://localhost:3000/getList")
+//     .then((res) => {
+//       console.log(res.data);
+//     })
+//     .catch((err) => console.log(err));
+// };
+
+// test();
+
+// const xhttp = new XMLHttpRequest();
+
+// xhttp.open("GET", "http://localhost:3000/getList", false);
+// xhttp.send();
+
+// const books = JSON.parse(xhttp.responseText);
+// console.log(books);
+
+// async function makeGetRequest() {
+//   let res = await axios.get("http://localhost:3000/getList");
+
+//   let data = res.data;
+//   console.log(data);
+// }
+// makeGetRequest();
+
+// axios
+//   .get("http://localhost:3000/getList")
+//   .then((res) => console.log(res.data))
+//   .catch((err) => console.log(err));
 </script>
 
 <style>
